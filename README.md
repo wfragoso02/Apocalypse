@@ -1,6 +1,4 @@
-# JS-Project
-
-## Apocalypse 
+# Apocalypse 
 ### Background and Overview
 * Id like to do a 3D first person shooting game against zombies. 
 ### Functionality and MVP Features
