@@ -1,0 +1,38 @@
+{
+  "name": "Apocalypse",
+  "private": true,
+  "dependencies": {
+    "@babel/core": "^7.4.0",
+    "@babel/preset-env": "^7.4.2",
+    "@babel/preset-react": "^7.0.0",
+    "babel-loader": "^8.0.5",
+    "webpack": "^4.29.6",
+    "webpack-cli": "^3.3.0"
+  },
+  "description": "This README would normally document whatever steps are necessary to get the application up and running.",
+  "version": "1.0.0",
+  "main": "webpack.config.js",
+  "directories": {
+    "lib": "lib",
+    "test": "test"
+  },
+  "engines": {
+    "node": "10.13.0",
+    "npm": "6.4.1"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "webpack --watch --mode=development"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/wfragoso02/JS-Project.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/wfragoso02/JS-Project/issues"
+  },
+  "homepage": "https://github.com/wfragoso02/JS-Project#readme"
+}
