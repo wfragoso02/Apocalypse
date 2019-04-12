@@ -100,7 +100,6 @@ function Enviroment(){
     loader.load(
         "/enviroment.glb",
         function ( gltf ) {
-            debugger
           var scale = 5.6;
           enviroment.body = gltf.scene.children[0];
           enviroment.body.name = "body";
