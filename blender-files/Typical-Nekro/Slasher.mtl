@@ -1,0 +1,9 @@
+# MTL written from /Users/manapkoolman/Desktop/Yusup/Dead Space 3 Models/NecroMorphs/Typical Nekro/Slasher.obj
+newmtl Necromorph
+Kd 1 1 1
+Ns 256
+d 1
+illum 2
+Ka 0 0 0
+Ks 0.2 0.2 0.2
+map_Kd /Users/manapkoolman/Desktop/Yusup/Dead Space 3 Models/NecroMorphs/Typical Nekro/Slasher.jpg

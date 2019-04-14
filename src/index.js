@@ -1,257 +1,235 @@
 import * as THREE from '../js/three';
+import MTLLoader from '../js/MTLLoader';
+import OBJLoader from '../js/OBJLoader';
 import OrbitControls from '../js/OrbitControls';
-import PointerLockControls from '../js/PointerLockControls';
-// import FirstPersonVRControls from '../js/FirstPersonVRControls';
-import enemy from './enemies';
-import Enemy from './enemies';
+import TDSLoader from '../js/TDSLoader';
+import GLTFLoader from '../js/GLTFLoader';
 
-// if (!THREE.FirstPersonVRControls && window.FirstPersonVRControls) {
-//     console.log('Found FirstPersonVRControls on the window');
-//     THREE.FirstPersonVRControls = FirstPersonVRControls;
-//   }
-//to display we need three things, a scene a camera and a renderer
 
-const width = window.innerWidth;
-const height = window.innerHeight;
-//scene.constructor takes no arguments 
-//however it decideds what is being rendered
+
+
+let monkey;
+let player = {height: 1.8, speed: 0.1, turnSpeed: Math.PI * 0.01}
+
 const scene = new THREE.Scene();
+const light = new THREE.AmbientLight('#ffffff', 3.0);
+light.position.set(0, 100, 0);
+scene.add(light);
 
-//perspective camera takes 3 arguments
-//(fov - field of view , aspect, near, far)
-const camera = new THREE.PerspectiveCamera(75, width / height, 0.1, 1000);
+const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+camera.position.set (0, player.height, -5);
+camera.lookAt(new THREE.Vector3(0, player.height, 0));
 
-//WebGlrenderer takes in no arguments
+
+const clock = THREE.Clock();
+// const loader , vlad, idle, rest, run;
 const renderer = new THREE.WebGLRenderer();
-renderer.setSize(width, height);
-
-//once we have the renderer ready we need to put it on to the body of the page
-//this works as the canvas element
+renderer.setSize(window.innerWidth, window.innerHeight);
+// renderer.setClearColor( 0xffffff, 0);
 document.body.appendChild(renderer.domElement);
 
+const objLoader = new OBJLoader();
+objLoader.setPath('/blender-files/');
 
-//example to create a cube
-const geometry1 = new THREE.BoxGeometry( 15, 17, 20 );
-const material1 = new THREE.MeshBasicMaterial( { color: 0xDCDCDC} );
-const cube1 = new THREE.Mesh( geometry1, material1 );
-cube1.position.setX(12)
-cube1.position.setY(12)
+const mtlLoader = new MTLLoader();
+mtlLoader.setPath('/blender-files/');
 
+new Promise((resolve) => {
+    mtlLoader.load('stage.mtl', (materials) => {
+        resolve(materials);
+    });
+}).then((materials) => {
+        materials.preload();
+        objLoader.setMaterials(materials);
+        objLoader.load('stage.obj', (object) => {
+            // monkey = object;
+            const stage = object;
+            stage.scale.x = stage.scale.y = stage.scale.z = 3;
+            scene.add(stage);
+        });
+});
 
-scene.add( cube1 );
-
-const geometry2 = new THREE.BoxGeometry( 15, 17, 20 );
-const material2 = new THREE.MeshBasicMaterial( { color: 0xDCDCDC} );
-const cube2 = new THREE.Mesh( geometry2, material2 );
-cube2.position.setX(-12)
-cube2.position.setY(-12)
-
-
-scene.add( cube2 );
-
-const geometry3 = new THREE.BoxGeometry( 15, 17, 20 );
-const material3 = new THREE.MeshBasicMaterial( { color: 0xDCDCDC } );
-const cube3 = new THREE.Mesh( geometry3, material3 );
-cube3.position.setX(-12)
-cube3.position.setY(12)
-
-
-scene.add( cube3 );
-const geometry4 = new THREE.BoxGeometry( 15, 17, 20 );
-const material4 = new THREE.MeshBasicMaterial( { color: 0xDCDCDC} );
-const cube4 = new THREE.Mesh( geometry4, material4 );
-cube4.position.setX(12)
-cube4.position.setY(-12)
-
-
-scene.add( cube4 );
-
-class Player {
-    constructor(pos = {x: 0, y: 0, z:5}) {
-        const spriteMap = new THREE.TextureLoader().load("images/swat-soldier-vs-zombies-isometric-2d-sprites/SWAT_soldier/swat_recharge_v01_26.png");
-        const spriteMaterial = new THREE.SpriteMaterial({ map: spriteMap, color: 0xffffff });
-        this.swat = new THREE.Sprite(spriteMaterial);
-        this.swat.scale['x'] = 5
-        this.swat.scale['y'] = 5
-        this.swat.scale['z'] = 5
-        this.swat.position.setX(pos.x)
-        this.swat.position.setY(pos.y)
-        this.swat.position.setZ(pos.z)
-        this.x = pos.x;
-        this.y = pos.y;
-        this.moveDown = this.moveDown.bind(this);
-        this.moveUp = this.moveUp.bind(this);
-        this.moveRight = this.moveRight.bind(this);
-        this.moveLeft = this.moveLeft.bind(this);
-    }
-    moveDown(){
-        this.y -= 1;
-    }
-    moveUp(){
-        this.y += 1;
-    }
-    moveRight(){
-        this.x += 1;
-    }
-    moveLeft(){
-
-        this.x -= 1;
-    }
+let keyboard= {};
+//making my own first person camera view
+function keyDown(event){
+    keyboard[event.keyCode] = true
 }
-window.addEventListener('keydown', function(event) {
-    switch (event.which) {
-      case 37: // Left
-        player1.moveLeft();
-        player1.swat.position['x'] += 1;
-      break;
-  
-      case 38: // Up
-        player1.moveUp();
-        player1.swat.position['y'] += 1;
-      break;
-  
-      case 39: // Right
-        player1.moveRight();
-        player1.swat.position['x'] -= 1;
-
-      break;
-  
-      case 40: // Down
-        player1.moveDown();
-        player1.swat.position['y'] -= 1;
-
-      break;
-    }
-  }, false);
-
-// Player.prototype.draw = function(context) {
-//     context.fillRect(Player.position.x, Player.position.y, 32, 32);
-//   };
-
-  
-//   Player.prototype.moveRight = function() {
-//     Player.position.x += 1;
-//   };
-  
-//   Player.prototype.moveUp = function() {
-//     Player.position.y -= 1;
-//   };
-  
-//   Player.prototype.moveRight = function() {
-//     Player.position.y += 1;
-//   };
-  
-const player1 = new Player();
-// player1.rotation.y = Math.PI / 2
-
-scene.add(player1.swat)
-
-
-
-
-// automatically omnce we add an geometry to the scene, it gets added to coordinates (0,0,0)
-// as well as the camera.  To fix this we reset the cameras z position.
-
-
-//lets make the hallway of an apartment with two plane geometry on top of each other.
-const plane1geometry = new THREE.PlaneGeometry(40, 40)
-const plane1material = new THREE.MeshBasicMaterial( {color: 0xF5F5DC, side: THREE.DoubleSide} );
-const plane1 = new THREE.Mesh( plane1geometry, plane1material );
-plane1.position.setZ(-10)
-scene.add( plane1 );
-
-const plane2geometry = new THREE.PlaneGeometry(40, 40)
-const plane2material = new THREE.MeshBasicMaterial( {color: 0xFAF0E6, side: THREE.DoubleSide} );
-const plane2 = new THREE.Mesh( plane2geometry, plane2material );
-plane2.position.setZ(10)
-scene.add( plane2 );
-
-
-const enemies = [];
-
-const spawnEnemy = () => {
-    const coordinates = [{x:-20, y: 0, z:5 }, {x:20, y: 0, z:5},{x:0, y: -20, z:5 },{x:0, y: 20, z:5 } ];
-    const coordinate = coordinates[Math.floor(Math.random() * coordinates.length)]
-    const enemy = new Enemy(coordinate);
-    enemies.push(enemy);
-    scene.add(enemy);
-    console.log(enemies);
+function keyUp(event){
+    keyboard[event.keyCode] = false;
+    
 }
-setInterval(spawnEnemy, 1000)
-
-
-// const rig = new THREE.Object3D();
-// rig.add(camera);
-// scene.add(rig);
-// // lets set up the controls to be able to see the entire plane
-// const fpVrControls = new FirstPersonVRControls(camera, scene, rig);
-// fpVrControls.verticalMovement = true;
-// fpVrControls.strafing = true;
-const controls = new OrbitControls(camera)
-const clock = new THREE.Clock();
-camera.position.set(0,0,40);
-controls.update();
-
-
-const gameOver = function(){
-    alert("Game Over");
+function keyLeft(event){
+    keyboard[event.keycode] = true
+    
+}
+function keyRight(event){
+    keyboard[event.keycode] = true
+    
 }
 
-function update(){
-    //this is going to be on the logic of the zombies
-    enemies.forEach((enemy, idx) => {
-        ['x','y'].forEach(dir =>{
-            if (enemy.position[dir] > 0){
-                enemy.position[dir] -= Math.random()/10;
-            };
-            if (enemy.position[dir] < 0){
-                enemy.position[dir] += Math.random()/10;
-            }
-        })
-        if (Math.floor(enemy.position['x']) === 0 && Math.floor(enemy.position['y']) === 0){
-            scene.remove(enemy);
-            enemies.splice(idx,1);
+window.addEventListener('keydown', keyDown)
+window.addEventListener('keyup', keyUp)
+// window.addEventListener('keyleft', keyLeft)
+// window.addEventListener('keyright', keyRight)
 
-            enemy.material.dispose();
-            enemy.geometry.dispose();
-            
-        }
-        // debugger
-        if(Math.floor(player1.swat.position.x) === Math.floor(enemy.position.x) && Math.floor(player1.swat.position.y) === Math.floor(enemy.position.y)){
-            scene.remove(enemy);
-            enemies.splice(idx,1);
-            enemy.material.dispose();
-            enemy.geometry.dispose();
-            gameOver();
-        }
+// const objLoader1 = new OBJLoader();
+// objLoader1.setPath('/blender-files/Typical-Nekro/');
 
-    })
-    controls.update();
-    camera.position.setZ(-10);
-    // camera.position.setX(0);
-    // camera.position.setY(0);
+// const mtlLoader1 = new MTLLoader();
+// mtlLoader1.setPath('/blender-files/Typical-Nekro/');
+
+// new Promise((resolve) => {
+//     mtlLoader1.load('Slasher.mtl', (materials) => {
+//         resolve(materials);
+//     });
+// }).then((materials) => {
+//         materials.preload();
+//         objLoader1.setMaterials(materials);
+//         objLoader1.load('Slasher.obj', (object) => {
+//             // monkey = object;
+//             const zombie = object;
+//             zombie.scale.x = zombie.scale.y = zombie.scale.z = 1.0;
+//             zombie.position.y = 1;
+//             scene.add(zombie);
+//         });
+// });
+
+// var loader = new THREE.TextureLoader();
+// var normal = loader.load('/blender-files/player/Textures/Text_0018_1.jpg');
+// var loader = new TDSLoader();
+// loader.setResourcePath('/blender-files/player/Textures/');
+// loader.load('/blender-files/player/MP_US_Engi.3ds', function (object) {
+//     object.traverse(function (child) {
+//         if (child instanceof THREE.Mesh) {
+//             child.material.normalMap = normal;
+//         }
+//     });
+//     object.scale.x = object.scale.y = object.scale.z = 0.1;
+//     scene.add(object);
+// });
 
 
 
+
+
+
+// var loader = new GLTFLoader();
+
+// // Optional: Provide a DRACOLoader instance to decode compressed mesh data
+// THREE.DRACOLoader.setDecoderPath( '/examples/js/libs/draco' );
+// loader.setDRACOLoader( new THREE.DRACOLoader() );
+	
+// // Optional: Pre-fetch Draco WASM/JS module, to save time while parsing.
+// THREE.DRACOLoader.getDecoderModule();
+
+// Load a glTF resource
+// let mesh;
+
+// let animations;
+// loader.load(
+// 	// resource URL
+// 	'/blender-files/real-zombie.glb',
+// 	// called when the resource is loaded
+// 	function ( gltf ) {
+//         debugger
+// 		scene.add( gltf.scene );
+
+// 		animations = gltf.animations; // Array<THREE.AnimationClip>
+// 		mesh = gltf.scene; // THREE.Scene
+// 		// gltf.scenes; // Array<THREE.Scene>
+// 		// gltf.cameras; // Array<THREE.Camera>
+// 		// gltf.asset; // Object
+
+// 	},
+// 	// called while loading is progressing
+// 	function ( xhr ) {
+
+// 		console.log( ( xhr.loaded / xhr.total * 100 ) + '% loaded' );
+
+// 	},
+// 	// called when loading has errors
+// 	function ( error ) {
+
+// 		console.log( 'An error happened' );
+
+// 	}
+// );
+
+
+// Create an AnimationMixer, and get the list of AnimationClip instances
+// var mixer = new THREE.AnimationMixer( mesh );
+
+// // Update the mixer on each frame
+// function update () {
+// 	mixer.update( deltaSeconds );
+// }
+
+// // Play a specific animation
+// debugger
+// var clip = THREE.AnimationClip.findByName( animations, 'walk_blocking' );
+// var action = mixer.clipAction( clip );
+// action.play();
+
+// // Play all animations
+// animations.forEach( function ( clip ) {
+// 	mixer.clipAction( clip ).play();
+// } );
+
+
+
+
+
+
+
+
+
+// const controls = new OrbitControls(camera, renderer.domElement);
+// controls.enableDamping = true;
+// controls.dampingFactor = 0.25;
+// controls.enableZoom = true;
+// controls.update();
+
+function init(){
+    document.addEventListener('keydown')
 }
 
+function render() {
+    // if (monkey) {
+    //     monkey.rotation.x += 0.01;
+    //     monkey.rotation.y += 0.01;
+    // }
+    // controls.update();
 
+    requestAnimationFrame(render);
+    renderer.render(scene, camera);
 
-function animate() {
-    requestAnimationFrame( animate );
-    // requestAnimationFrame(spawnEnemy);
-    // fpVrControls.update(clock.getDelta());
-    update();
-    // console.log(scene)
-    // console.log(camera)
-	renderer.render( scene, camera );
+    if (keyboard[87]){
+        camera.position.x -= Math.sin(camera.rotation.y) * player.speed;
+        camera.position.z -= -Math.cos(camera.rotation.y) * player.speed;
+    }
+    if (keyboard[83]){
+        camera.position.x += Math.sin(camera.rotation.y) * player.speed;
+        camera.position.z += -Math.cos(camera.rotation.y) * player.speed;
+    }
+    if (keyboard[65]){
+        camera.position.x += Math.sin(camera.rotation.y + Math.PI / 2) * player.speed;
+        camera.position.z += -Math.cos(camera.rotation.y + Math.PI / 2) * player.speed;
+    }
+    if (keyboard[68]){
+        camera.position.x += Math.sin(camera.rotation.y - Math.PI / 2) * player.speed;
+        camera.position.z += -Math.cos(camera.rotation.y - Math.PI / 2) * player.speed;
+    }
+    
+
+    if (keyboard[37]){
+        camera.rotation.y -= player.turnSpeed;
+    }
+    if (keyboard[39]){
+        camera.rotation.y += player.turnSpeed;
+    }
 }
-animate();
+render();
 
-
-
-
-// We need to make sure that on resizing the field is cooperative 
 window.addEventListener('resize', function () {
     const width = window.innerWidth;
     const height = window.innerHeight;
