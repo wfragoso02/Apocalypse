@@ -9,7 +9,7 @@ import GLTFLoader from '../js/GLTFLoader';
 
 
 let monkey;
-let player = {height: 1.8, speed: 0.1, turnSpeed: Math.PI * 0.01}
+let player = {height: 1.8, speed: 0.1, turnSpeed: Math.PI * 0.02}
 
 const scene = new THREE.Scene();
 const light = new THREE.AmbientLight('#ffffff', 3.0);
@@ -48,6 +48,35 @@ new Promise((resolve) => {
             scene.add(stage);
         });
 });
+
+// let guns = [];
+let gun;
+// const objLoader1 = new OBJLoader();
+// objLoader1.setPath('/blender-files/Glock/OBJ MTL/');
+
+// const mtlLoader1 = new MTLLoader();
+// mtlLoader1.setPath('/blender-files/Glock/OBJ MTL/');
+
+// new Promise((resolve) => {
+//     mtlLoader1.load('Glock 3d.mtl', (materials) => {
+//         resolve(materials);
+//     });
+// }).then((materials) => {
+//         materials.preload();
+//         objLoader1.setMaterials(materials);
+//         objLoader1.load('Glock 3d.obj', (object) => {
+//             gun = object;
+//             // const stage = object;
+//             // gun.position.set(
+//             //     camera.position.x - Math.sin(camera.rotation.y),
+//             //     camera.position.y,
+//             //     camera.position.z + Math.cos(camera.rotation.y)
+//             // )
+//             scene.add(gun);
+//         });
+// });
+// const gun = guns[0]
+// debugger
 
 let keyboard= {};
 //making my own first person camera view
@@ -113,9 +142,9 @@ window.addEventListener('keyup', keyUp)
 
 
 
-// var loader = new GLTFLoader();
+var loader = new GLTFLoader();
 
-// // Optional: Provide a DRACOLoader instance to decode compressed mesh data
+// Optional: Provide a DRACOLoader instance to decode compressed mesh data
 // THREE.DRACOLoader.setDecoderPath( '/examples/js/libs/draco' );
 // loader.setDRACOLoader( new THREE.DRACOLoader() );
 	
@@ -123,37 +152,44 @@ window.addEventListener('keyup', keyUp)
 // THREE.DRACOLoader.getDecoderModule();
 
 // Load a glTF resource
-// let mesh;
+let mesh;
 
 // let animations;
-// loader.load(
-// 	// resource URL
-// 	'/blender-files/real-zombie.glb',
-// 	// called when the resource is loaded
-// 	function ( gltf ) {
-//         debugger
-// 		scene.add( gltf.scene );
+loader.load(
+	// resource URL
+	'/blender-files/Handgun_Game_Blender Gamer Engine.glb',
+	// called when the resource is loaded
+	function ( gltf ) {
+        
+        gun = gltf.scene; // THREE.Scene
+        // debugger
+        gun.rotation.set(new THREE.Vector3( 0, 0, Math.PI / 2));
+        // gun.rotation = Math.PI/2;
+        // debugger
+            gun.scale.x = gun.scale.y = gun.scale.z = 0.5;
 
-// 		animations = gltf.animations; // Array<THREE.AnimationClip>
-// 		mesh = gltf.scene; // THREE.Scene
-// 		// gltf.scenes; // Array<THREE.Scene>
-// 		// gltf.cameras; // Array<THREE.Camera>
-// 		// gltf.asset; // Object
 
-// 	},
-// 	// called while loading is progressing
-// 	function ( xhr ) {
+        scene.add( gun );
 
-// 		console.log( ( xhr.loaded / xhr.total * 100 ) + '% loaded' );
+		// animations = gltf.animations; // Array<THREE.AnimationClip>
+		// gltf.scenes; // Array<THREE.Scene>
+		// gltf.cameras; // Array<THREE.Camera>
+		// gltf.asset; // Object
 
-// 	},
-// 	// called when loading has errors
-// 	function ( error ) {
+	},
+	// called while loading is progressing
+	function ( xhr ) {
 
-// 		console.log( 'An error happened' );
+		console.log( ( xhr.loaded / xhr.total * 100 ) + '% loaded' );
 
-// 	}
-// );
+	},
+	// called when loading has errors
+	function ( error ) {
+
+		console.log( 'An error happened' );
+
+	}
+);
 
 
 // Create an AnimationMixer, and get the list of AnimationClip instances
@@ -227,6 +263,23 @@ function render() {
     if (keyboard[39]){
         camera.rotation.y += player.turnSpeed;
     }
+
+    if (gun){
+        debugger
+        gun.rotation.x = Math.PI / 2;
+        gun.position.set(
+            camera.position.x - Math.sin(camera.rotation.y) * 0.6,
+            camera.position.y - 0.5,
+            camera.position.z + Math.cos(camera.rotation.y) * 0.6
+        )
+        gun.rotation.set(
+            camera.rotation.x,
+            camera.rotation.y,
+            camera.rotation.z
+        )
+    }
+
+
 }
 render();
 
