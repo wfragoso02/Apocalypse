@@ -9,7 +9,10 @@ import GLTFLoader from '../js/GLTFLoader';
 
 
 let monkey;
-let player = {height: 1.8, speed: 0.1, turnSpeed: Math.PI * 0.02}
+let player = {height: 5, speed: 0.1, turnSpeed: Math.PI * 0.02, canShoot:0 };
+
+
+
 
 const scene = new THREE.Scene();
 const light = new THREE.AmbientLight('#ffffff', 3.0);
@@ -18,10 +21,14 @@ scene.add(light);
 
 const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
 camera.position.set (0, player.height, -5);
+player.position = camera.position;
+debugger
 camera.lookAt(new THREE.Vector3(0, player.height, 0));
 
 
-const clock = THREE.Clock();
+
+let stage;
+const clock = new THREE.Clock();
 // const loader , vlad, idle, rest, run;
 const renderer = new THREE.WebGLRenderer();
 renderer.setSize(window.innerWidth, window.innerHeight);
@@ -43,7 +50,7 @@ new Promise((resolve) => {
         objLoader.setMaterials(materials);
         objLoader.load('stage.obj', (object) => {
             // monkey = object;
-            const stage = object;
+            stage = object;
             stage.scale.x = stage.scale.y = stage.scale.z = 3;
             scene.add(stage);
         });
@@ -76,7 +83,6 @@ let gun;
 //         });
 // });
 // const gun = guns[0]
-// debugger
 
 let keyboard= {};
 //making my own first person camera view
@@ -141,7 +147,6 @@ window.addEventListener('keyup', keyUp)
 
 
 
-
 var loader = new GLTFLoader();
 
 // Optional: Provide a DRACOLoader instance to decode compressed mesh data
@@ -162,10 +167,8 @@ loader.load(
 	function ( gltf ) {
         
         gun = gltf.scene; // THREE.Scene
-        // debugger
         gun.rotation.set(new THREE.Vector3( 0, 0, Math.PI / 2));
         // gun.rotation = Math.PI/2;
-        // debugger
             gun.scale.x = gun.scale.y = gun.scale.z = 0.5;
 
 
@@ -201,7 +204,6 @@ loader.load(
 // }
 
 // // Play a specific animation
-// debugger
 // var clip = THREE.AnimationClip.findByName( animations, 'walk_blocking' );
 // var action = mixer.clipAction( clip );
 // action.play();
@@ -215,6 +217,7 @@ loader.load(
 
 
 
+const bullets = [];
 
 
 
@@ -235,11 +238,20 @@ function render() {
     //     monkey.rotation.y += 0.01;
     // }
     // controls.update();
+    const time = Date.now() * 0.0005;
+    const delta = clock.getDelta();
 
     requestAnimationFrame(render);
     renderer.render(scene, camera);
+    debugger
+    const canMove = function(player) {
+        if(scene.children.group){
+
+        }
+    }
 
     if (keyboard[87]){
+        debugger
         camera.position.x -= Math.sin(camera.rotation.y) * player.speed;
         camera.position.z -= -Math.cos(camera.rotation.y) * player.speed;
     }
@@ -265,18 +277,56 @@ function render() {
     }
 
     if (gun){
-        debugger
         gun.rotation.x = Math.PI / 2;
         gun.position.set(
-            camera.position.x - Math.sin(camera.rotation.y) * 0.6,
-            camera.position.y - 0.5,
-            camera.position.z + Math.cos(camera.rotation.y) * 0.6
+            camera.position.x - Math.sin(camera.rotation.y + Math.PI / 6) * 0.6,
+            camera.position.y - 0.5 + Math.sin( time * 4) * 0.01,
+            camera.position.z + Math.cos(camera.rotation.y + Math.PI / 6) * 0.6
         )
         gun.rotation.set(
             camera.rotation.x,
             camera.rotation.y,
             camera.rotation.z
         )
+    }
+    bullets.forEach((bullet, idx) => {
+        if(bullet.alive === false){
+            bullets.splice(idx, 1);
+        }else{
+
+            bullet.position.add(bullet.velocity)
+        }
+    })
+
+
+    if(keyboard[32] && player.canShoot <=0 ){
+        let bullet = new THREE.Mesh( 
+            new THREE.SphereGeometry(0.05, 6, 32, ),
+            new THREE.MeshBasicMaterial({color: 0xffffff, wireframe: true})
+        )
+
+        bullets.push(bullet)
+
+        bullet.position.set(
+            gun.position.x,
+            gun.position.y + 0.15,
+            gun.position.z
+        )
+        
+        bullet.velocity = new THREE.Vector3(
+            -Math.sin(camera.rotation.y),0, Math.cos(camera.rotation.y)
+        )
+        bullet.alive = true;
+        setTimeout( function(){ 
+            bullet.alive = false;
+            scene.remove(bullet)
+        }, 500)
+        scene.add(bullet);
+        player.canShoot = 10;
+    }
+
+    if (player.canShoot > 0){
+        player.canShoot -= 1;
     }
 
 

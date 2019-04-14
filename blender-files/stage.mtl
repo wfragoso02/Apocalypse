@@ -1,5 +1,62 @@
 # Blender MTL File: 'stage.blend'
-# Material Count: 3
+# Material Count: 10
+
+newmtl Door
+Ns 94.117647
+Ka 1.000000 1.000000 1.000000
+Kd 0.800000 0.800000 0.800000
+Ks 0.040000 0.040000 0.040000
+Ke 0.000000 0.000000 0.000000
+Ni 1.000000
+d 1.000000
+illum 2
+map_Kd /Users/wellingtonfragoso/Downloads/Room-Door/textures/Door_C.jpg
+map_Bump /Users/wellingtonfragoso/Downloads/Room-Door/textures/Door_C.jpg
+map_Ks /Users/wellingtonfragoso/Downloads/Room-Door/textures/Door_C.jpg
+
+newmtl Ebony_mat
+Ns 25.490196
+Ka 0.117600 0.117600 0.117600
+Kd 0.117600 0.117600 0.117600
+Ks 0.225000 0.225000 0.225000
+Ke 0.000000 0.000000 0.000000
+Ni 1.500000
+d 1.000000
+illum 2
+
+newmtl Glossy
+Ns 94.117647
+Ka 1.000000 1.000000 1.000000
+Kd 0.640000 0.640000 0.640000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.000000
+d 1.000000
+illum 2
+map_Kd /Users/wellingtonfragoso/Downloads/Room-Door/textures/Door_C.jpg
+refl /Users/wellingtonfragoso/Downloads/Room-Door/textures/Reflexion.jpg
+
+newmtl Glossy_Reflexion.jpg
+Ns 94.117647
+Ka 1.000000 1.000000 1.000000
+Kd 0.640000 0.640000 0.640000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.000000
+d 1.000000
+illum 2
+map_Kd /Users/wellingtonfragoso/Downloads/Room-Door/textures/Reflexion.jpg
+refl /Users/wellingtonfragoso/Downloads/Room-Door/textures/Reflexion.jpg
+
+newmtl Honey_mat
+Ns 23.529412
+Ka 0.434000 0.434000 0.434000
+Kd 0.600000 0.427500 0.274500
+Ks 0.180000 0.180000 0.180000
+Ke 0.000000 0.000000 0.000000
+Ni 1.500000
+d 1.000000
+illum 2
 
 newmtl Material.001
 Ns 96.078431
@@ -17,6 +74,26 @@ Ka 0.000000 0.000000 0.000000
 Kd 0.8 0.8 0.8
 Ks 0.8 0.8 0.8
 d 1
+illum 2
+
+newmtl Silver_mat
+Ns 58.823529
+Ka 0.698000 0.698000 0.698000
+Kd 0.698000 0.698000 0.698000
+Ks 0.567600 0.567600 0.567600
+Ke 0.000000 0.000000 0.000000
+Ni 1.500000
+d 1.000000
+illum 2
+
+newmtl Window_Mat
+Ns 9.803922
+Ka 0.862700 0.862700 0.862700
+Kd 0.862700 0.862700 0.862700
+Ks 0.000000 0.000000 0.000000
+Ke 0.000000 0.000000 0.000000
+Ni 1.500000
+d 0.200000
 illum 2
 
 newmtl floorI
