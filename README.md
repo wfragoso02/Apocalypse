@@ -1,6 +1,6 @@
 # Apocalypse 
 ### Background and Overview
-* Apocalypse is a 3D first person shooting game with a survival mode objective.  The character is trapped in the hallway of an apartment building while zombies chase after him.  The main and only objective is to kill as many zombies as possible to survive.
+* Apocalypse is a 3D first person shooting game with a survival mode objective.  The character is trapped in the hallway of an apartment building while being chased by zombies.  The main and only objective is to kill as many zombies as possible to survive.
 ### Functionality and MVP Features
 *  MVP 1 - Create a 3D replica of an apartment hallway to be the layout of the game (blender).
 *  MVP 2 - Get the camera to be a first person view.
