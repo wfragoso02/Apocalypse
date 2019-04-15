@@ -113,7 +113,6 @@ new Promise((resolve) => {
             //     scene.add(mesh)
             // })
             // monkey = object;
-            // debugger
             // stage = new Physijs.ConcaveMesh(object);
 
             object.children.forEach(mesh => {
@@ -238,7 +237,6 @@ const spawnEnemy = () => {
                 const enemy = gltf.scene; // THREE.Scene
                 // zombie.rotation.set(new THREE.Vector3( 0, 0, Math.PI / 2));
                 // zombie.rotation = Math.PI/2;
-                debugger
                 enemy.animations = gltf.animations[0]
                 enemy.scale.x = enemy.scale.y = enemy.scale.z = 0.8;
                 enemy.position.setX(coordinate.x)
@@ -296,7 +294,6 @@ loader.load(
         gun.rotation.set(new THREE.Vector3( 0, 0, Math.PI / 2));
         // gun.rotation = Math.PI/2;
             gun.scale.x = gun.scale.y = gun.scale.z = 0.5;
-        debugger
         gun.animations = gltf.animations;
         scene.add( gun );
         calculateCollisionPoints( gun );
@@ -376,14 +373,11 @@ loader.load(
 const update = function() {
     
     enemies.forEach((enemy, idx) => {
-        // debugger
         // var mixer = new THREE.AnimationMixer(enemy);
         // var animation = enemy.animations;
         
         // var action = mixer.clipAction(animation);
-        // debugger
         // action.play();
-        debugger
         // for (var vertexIndex = 0; vertexIndex < enemy.geometry.vertices.length; vertexIndex++) {
         //     var localVertex = enemy.geometry.vertices[vertexIndex].clone();
         //     var globalVertex = enemy.matrix.multiplyVector3(localVertex);
@@ -392,7 +386,6 @@ const update = function() {
         //     var ray = new THREE.Ray(enemy.position, directionVector.clone().normalize());
         //     var collisionResults = ray.intersectObjects(collidableMeshList);
         //     if (collisionResults.length > 0 && collisionResults[0].distance < directionVector.length()) {
-        //         debugger
         //     }
         // }
 
@@ -454,6 +447,48 @@ const update = function() {
 // } );
 
 
+function canMove(camera, num){
+    if (num === 87){
+        if (( camera.position.x - Math.sin(camera.rotation.y) * player.speed > -4 || camera.position.z - -Math.cos(camera.rotation.y) * player.speed > -5)
+        && (camera.position.z - -Math.cos(camera.rotation.y) * player.speed > -21 && camera.position.z - -Math.cos(camera.rotation.y) * player.speed < 21)
+        && (camera.position.x - Math.sin(camera.rotation.y) * player.speed > -21 && camera.position.x - Math.sin(camera.rotation.y) * player.speed < 21)
+        && (camera.position.z - -Math.cos(camera.rotation.y) * player.speed < 5 || camera.position.x - Math.sin(camera.rotation.y) * player.speed > -5)
+        && (camera.position.x - Math.sin(camera.rotation.y) * player.speed < 4 || camera.position.z - -Math.cos(camera.rotation.y) * player.speed > -5)
+        && (camera.position.x - Math.sin(camera.rotation.y) * player.speed < 4 || camera.position.z - -Math.cos(camera.rotation.y) * player.speed < 5)){
+        return true;
+        }
+    }else if(num === 83){
+        if ((camera.position.x + Math.sin(camera.rotation.y) * player.speed > -4 || camera.position.z + -Math.cos(camera.rotation.y) * player.speed > -5)
+        && (camera.position.z + -Math.cos(camera.rotation.y) * player.speed > -21 && camera.position.z + -Math.cos(camera.rotation.y) * player.speed < 21)
+        && (camera.position.x + Math.sin(camera.rotation.y) * player.speed > -21 && camera.position.x + Math.sin(camera.rotation.y) * player.speed < 21 )
+        && (camera.position.z + -Math.cos(camera.rotation.y) * player.speed < 5 || camera.position.x - Math.sin(camera.rotation.y) * player.speed > -5)
+        && (camera.position.x + Math.sin(camera.rotation.y) * player.speed < 4 || camera.position.z + -Math.cos(camera.rotation.y) * player.speed > -5)
+        && (camera.position.x + Math.sin(camera.rotation.y) * player.speed < 4 || camera.position.z + -Math.cos(camera.rotation.y) * player.speed < 5)){
+            return true;
+        }
+    }else if(num === 65){
+        if((camera.position.x + Math.sin(camera.rotation.y + Math.PI / 2) * player.speed > -4 || camera.position.z + -Math.cos(camera.rotation.y + Math.PI / 2) * player.speed > -5)
+        && (camera.position.z + -Math.cos(camera.rotation.y + Math.PI / 2) * player.speed > -21 && camera.position.z + -Math.cos(camera.rotation.y + Math.PI / 2) * player.speed < 21)
+        && (camera.position.x + Math.sin(camera.rotation.y + Math.PI / 2) * player.speed > -21 && camera.position.x + Math.sin(camera.rotation.y + Math.PI / 2) * player.speed < 21)
+        && (camera.position.z + -Math.cos(camera.rotation.y + Math.PI / 2) * player.speed < 5 || camera.position.x + Math.sin(camera.rotation.y + Math.PI / 2) * player.speed > -5)
+        && (camera.position.x + Math.sin(camera.rotation.y + Math.PI / 2) * player.speed < 4 || camera.position.z + -Math.cos(camera.rotation.y + Math.PI / 2) * player.speed > -5)
+        && (camera.position.x + Math.sin(camera.rotation.y + Math.PI / 2) * player.speed < 4 || camera.position.z + -Math.cos(camera.rotation.y + Math.PI / 2) * player.speed < 5)){
+            return true;
+        }
+    }else if(num === 68){
+        if((camera.position.x + Math.sin(camera.rotation.y - Math.PI / 2) * player.speed > -4 || camera.position.z + -Math.cos(camera.rotation.y - Math.PI / 2) * player.speed > -5)
+        && (camera.position.z + -Math.cos(camera.rotation.y - Math.PI / 2) * player.speed > -21 && camera.position.z + -Math.cos(camera.rotation.y - Math.PI / 2) * player.speed < 21)
+        && (camera.position.x + Math.sin(camera.rotation.y - Math.PI / 2) * player.speed > -21 && camera.position.x + Math.sin(camera.rotation.y - Math.PI / 2) * player.speed < 21 )
+        && (camera.position.z + -Math.cos(camera.rotation.y - Math.PI / 2) * player.speed < 5 || camera.position.x + Math.sin(camera.rotation.y - Math.PI / 2) * player.speed > -5)
+        && (camera.position.x + Math.sin(camera.rotation.y - Math.PI / 2) * player.speed < 4 || camera.position.z + -Math.cos(camera.rotation.y - Math.PI / 2) * player.speed > -5)
+        && (camera.position.x + Math.sin(camera.rotation.y - Math.PI / 2) * player.speed < 4 || camera.position.z + -Math.cos(camera.rotation.y - Math.PI / 2) * player.speed < 5 )){
+            return true;
+        }
+    }
+    
+}
+
+
 const bullets = [];
 
 
@@ -485,20 +520,21 @@ function render() {
     // scene.Stimulate();
     //     }
     // }
+    
     update();
-    if (keyboard[87]){
+    if (keyboard[87] && canMove(camera, 87)){
         camera.position.x -= Math.sin(camera.rotation.y) * player.speed;
         camera.position.z -= -Math.cos(camera.rotation.y) * player.speed;
     }
-    if (keyboard[83]){
+    if (keyboard[83] && canMove(camera, 83)){
         camera.position.x += Math.sin(camera.rotation.y) * player.speed;
         camera.position.z += -Math.cos(camera.rotation.y) * player.speed;
     }
-    if (keyboard[65]){
+    if (keyboard[65] && canMove(camera, 65)){
         camera.position.x += Math.sin(camera.rotation.y + Math.PI / 2) * player.speed;
         camera.position.z += -Math.cos(camera.rotation.y + Math.PI / 2) * player.speed;
     }
-    if (keyboard[68]){
+    if (keyboard[68] && canMove(camera, 68)){
         camera.position.x += Math.sin(camera.rotation.y - Math.PI / 2) * player.speed;
         camera.position.z += -Math.cos(camera.rotation.y - Math.PI / 2) * player.speed;
     }
@@ -536,9 +572,7 @@ function render() {
 
 
     if(keyboard[32] && player.canShoot <=0 ){
-        // debugger
         // Create an AnimationMixer, and get the list of AnimationClip instances
-        debugger
         var mixer = new THREE.AnimationMixer(gun);
         var clips = gun.animations;
 

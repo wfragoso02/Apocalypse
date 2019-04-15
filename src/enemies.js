@@ -26,7 +26,6 @@ export default class Enemy {
         const loader = new GLTFLoader();
         let zombie;
         loader.load( '/blender-files/real-zombie.glb', function (gltf) {
-                debugger
                 zombie = gltf.scene; // THREE.Scene
                 // zombie.rotation.set(new THREE.Vector3( 0, 0, Math.PI / 2));
                 // zombie.rotation = Math.PI/2;
@@ -54,7 +53,6 @@ export default class Enemy {
 
             }
         );
-        debugger
         
         // return this.zombie;
     }
