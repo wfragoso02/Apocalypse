@@ -95,38 +95,73 @@ renderer.setSize(window.innerWidth, window.innerHeight);
 // renderer.setClearColor( 0xffffff, 0);
 document.body.appendChild(renderer.domElement);
 
-const objLoader = new OBJLoader();
-objLoader.setPath('/blender-files/');
+const loader2 = new GLTFLoader();
+        loader2.load( '/blender-files/stage.glb', function (gltf) {
+                stage = gltf.scene; // THREE.Scene
+                // zombie.rotation.set(new THREE.Vector3( 0, 0, Math.PI / 2));
+                // zombie.rotation = Math.PI/2;
+                // enemy.animations = gltf.animations[0]
+                // enemy.scale.x = enemy.scale.y = enemy.scale.z = 0.8;
+                // enemy.position.setX(coordinate.x)
+                // enemy.position.setY(coordinate.y)
+                // enemy.position.setZ(coordinate.z)
+                // enemy.speed = speed
+                // enemies.push(enemy);
+                stage.scale.x = stage.scale.y = stage.scale.z = 3;
+                scene.add(stage);
+                // return zombie;
+                // animations = gltf.animations; // Array<THREE.AnimationClip>
+                // gltf.scenes; // Array<THREE.Scene>
+                // gltf.cameras; // Array<THREE.Camera>
+                // gltf.asset; // Object
 
-const mtlLoader = new MTLLoader();
-mtlLoader.setPath('/blender-files/');
-new Promise((resolve) => {
-    mtlLoader.load('stage.mtl', (materials) => {
-        resolve(materials);
-    });
-}).then((materials) => {
-        materials.preload();
-        objLoader.setMaterials(materials);
-        objLoader.load('stage.obj', (object) => {
-            // object.children.forEach(mesh => {
-            //     mesh.scale.x = mesh.scale.y = mesh.scale.z = 3;
-            //     scene.add(mesh)
-            // })
-            // monkey = object;
-            // stage = new Physijs.ConcaveMesh(object);
+            },
+            // called while loading is progressing
+            function (xhr) {
 
-            object.children.forEach(mesh => {
-                const geometry = mesh.geometry;
-                const material = mesh.material;
-                const newMesh = new Physijs.BoxMesh(geometry, material);
-                newMesh.scale.x = newMesh.scale.y = newMesh.scale.z = 3;
-                scene.add(newMesh);
+                console.log((xhr.loaded / xhr.total * 100) + '% loaded');
+
+            },
+            // called when loading has errors
+            function (error) {
+
+                console.log('An error happened');
+
+            }
+        );
+
+// const objLoader = new OBJLoader();
+// objLoader.setPath('/blender-files/');
+
+// const mtlLoader = new MTLLoader();
+// mtlLoader.setPath('/blender-files/');
+// new Promise((resolve) => {
+//     mtlLoader.load('stage.mtl', (materials) => {
+//         resolve(materials);
+//     });
+// }).then((materials) => {
+//         materials.preload();
+//         objLoader.setMaterials(materials);
+//         objLoader.load('stage.obj', (object) => {
+//             // object.children.forEach(mesh => {
+//             //     mesh.scale.x = mesh.scale.y = mesh.scale.z = 3;
+//             //     scene.add(mesh)
+//             // })
+//             // monkey = object;
+//             // stage = new Physijs.ConcaveMesh(object);
+
+//             object.children.forEach(mesh => {
+//                 const geometry = mesh.geometry;
+//                 const material = mesh.material;
+//                 const newMesh = new Physijs.BoxMesh(geometry, material);
+//                 newMesh.scale.x = newMesh.scale.y = newMesh.scale.z = 3;
+//                 scene.add(newMesh);
                 
-            });
-            stage = object;
-            // calculateCollisionPoints( stage );
-        });
-});
+//             });
+//             stage = object;
+//             // calculateCollisionPoints( stage );
+//         });
+// });
 
 // const planeGeometry = 
 
@@ -397,17 +432,10 @@ const update = function() {
                     enemy.position[dir] += enemy.speed;
                 }
             })
-            if (Math.floor(enemy.position['x']) === 0 && Math.floor(enemy.position['z']) === 0){
-                scene.remove(enemy);
-                enemies.splice(idx,1);
-    
-                // enemy.material.dispose();
-                // enemy.geometry.dispose();
-                
-            }
+
             bullets.forEach(bullet => {
-                if((Math.floor(enemy.position['x']) === Math.floor(bullet.position['x'])) && 
-                (Math.floor(enemy.position['z']) === Math.floor(bullet.position['z']))){
+                if((Math.floor(enemy.position['x']) === (Math.floor(bullet.position['x'])) || (Math.floor(enemy.position['x'] === Math.floor(bullet.position['x'] + 1))) || (Math.floor(enemy.position['x'] === Math.floor(bullet.position['x'] - 1)))) && 
+                (Math.floor(enemy.position['z']) === Math.floor(bullet.position['z']) || (Math.floor(enemy.position['z']) === Math.floor(enemy.position['z'] + 1)) || (Math.floor(enemy.position['z'] - 1)))){
                     bullet.alive = false;
                     scene.remove(bullet)
                     scene.remove(enemy);
@@ -588,8 +616,8 @@ function render() {
         });
         mixer.update( delta )
         let bullet = new THREE.Mesh( 
-            new THREE.SphereGeometry(0.05, 6, 32, ),
-            new THREE.MeshBasicMaterial({color: 0xffffff, wireframe: true})
+            new THREE.SphereGeometry(0.1, 6, 32, ),
+            new THREE.MeshBasicMaterial({color: 0xffffff, wireframe: false})
         )
 
         bullets.push(bullet)
