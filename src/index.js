@@ -477,42 +477,85 @@ const update = function() {
 
 function canMove(camera, num){
     if (num === 87){
-        if (( camera.position.x - Math.sin(camera.rotation.y) * player.speed > -4 || camera.position.z - -Math.cos(camera.rotation.y) * player.speed > -5)
-        && (camera.position.z - -Math.cos(camera.rotation.y) * player.speed > -21 && camera.position.z - -Math.cos(camera.rotation.y) * player.speed < 21)
-        && (camera.position.x - Math.sin(camera.rotation.y) * player.speed > -21 && camera.position.x - Math.sin(camera.rotation.y) * player.speed < 21)
-        && (camera.position.z - -Math.cos(camera.rotation.y) * player.speed < 5 || camera.position.x - Math.sin(camera.rotation.y) * player.speed > -5)
-        && (camera.position.x - Math.sin(camera.rotation.y) * player.speed < 4 || camera.position.z - -Math.cos(camera.rotation.y) * player.speed > -5)
-        && (camera.position.x - Math.sin(camera.rotation.y) * player.speed < 4 || camera.position.z - -Math.cos(camera.rotation.y) * player.speed < 5)){
-        return true;
+        if((camera.position.x - Math.sin(camera.rotation.y) * player.speed > 21 || camera.position.x - Math.sin(camera.rotation.y) * player.speed < -21)
+        || (camera.position.z - -Math.cos(camera.rotation.y) * player.speed > 21 || camera.position.z - -Math.cos(camera.rotation.y) * player.speed < -21 )
+        || ((Math.floor(camera.position.z - -Math.cos(camera.rotation.y) * player.speed) === -7 || Math.floor(camera.position.z - -Math.cos(camera.rotation.y) * player.speed) === -5) && camera.position.x - Math.sin(camera.rotation.y) * player.speed > 5)
+        || ((Math.floor(camera.position.z - -Math.cos(camera.rotation.y) * player.speed) === -7 || Math.floor(camera.position.z - -Math.cos(camera.rotation.y) * player.speed) === -5) && camera.position.x - Math.sin(camera.rotation.y) * player.speed < -5)
+        || ((Math.floor(camera.position.z - -Math.cos(camera.rotation.y) * player.speed) === 7 || Math.floor(camera.position.z - -Math.cos(camera.rotation.y) * player.speed) === 5) && camera.position.x - Math.sin(camera.rotation.y) * player.speed > 5)
+        || ((Math.floor(camera.position.z - -Math.cos(camera.rotation.y) * player.speed) === 7 || Math.floor(camera.position.z - -Math.cos(camera.rotation.y) * player.speed) === 5) && camera.position.x - Math.sin(camera.rotation.y) * player.speed < -5)
+        || ((Math.floor(camera.position.x - Math.sin(camera.rotation.y) * player.speed) === 7 || Math.floor(camera.position.x - Math.sin(camera.rotation.y) * player.speed) === 5) && camera.position.z - -Math.cos(camera.rotation.y) * player.speed > 19)
+        || ((Math.floor(camera.position.x - Math.sin(camera.rotation.y) * player.speed) === 7 || Math.floor(camera.position.x - Math.sin(camera.rotation.y) * player.speed) === 5) && camera.position.z - -Math.cos(camera.rotation.y) * player.speed < -19)
+        || ((Math.floor(camera.position.x - Math.sin(camera.rotation.y) * player.speed) === -5 || Math.floor(camera.position.x - Math.sin(camera.rotation.y) * player.speed) === -7 )&& camera.position.z - -Math.cos(camera.rotation.y) * player.speed > 19)
+        || ((Math.floor(camera.position.x - Math.sin(camera.rotation.y) * player.speed) === -5 || Math.floor(camera.position.x - Math.sin(camera.rotation.y) * player.speed) === -8 )&& camera.position.z - -Math.cos(camera.rotation.y) * player.speed < -19)
+        || ((Math.floor(camera.position.x - Math.sin(camera.rotation.y) * player.speed) === -5 || Math.floor(camera.position.x - Math.sin(camera.rotation.y) * player.speed) === -7 )&& (camera.position.z - -Math.cos(camera.rotation.y) * player.speed > 6 && camera.position.z - -Math.cos(camera.rotation.y) * player.speed < 15))
+        || ((Math.floor(camera.position.x - Math.sin(camera.rotation.y) * player.speed) === -5 || Math.floor(camera.position.x - Math.sin(camera.rotation.y) * player.speed) === -8 )&& (camera.position.z - -Math.cos(camera.rotation.y) * player.speed < -6 && camera.position.z - -Math.cos(camera.rotation.y) * player.speed > -15))
+        || ((Math.floor(camera.position.x - Math.sin(camera.rotation.y) * player.speed) === 5 || Math.floor(camera.position.x - Math.sin(camera.rotation.y) * player.speed) === 7) && (camera.position.z - -Math.cos(camera.rotation.y) * player.speed > 6 && camera.position.z - -Math.cos(camera.rotation.y) * player.speed < 15))
+        || ((Math.floor(camera.position.x - Math.sin(camera.rotation.y) * player.speed) === 5 || Math.floor(camera.position.x - Math.sin(camera.rotation.y) * player.speed) === 7) && (camera.position.z - -Math.cos(camera.rotation.y) * player.speed < -6 && camera.position.z - -Math.cos(camera.rotation.y) * player.speed > -15))
+        
+        ){
+            return false;
         }
+       
     }else if(num === 83){
-        if ((camera.position.x + Math.sin(camera.rotation.y) * player.speed > -4 || camera.position.z + -Math.cos(camera.rotation.y) * player.speed > -5)
-        && (camera.position.z + -Math.cos(camera.rotation.y) * player.speed > -21 && camera.position.z + -Math.cos(camera.rotation.y) * player.speed < 21)
-        && (camera.position.x + Math.sin(camera.rotation.y) * player.speed > -21 && camera.position.x + Math.sin(camera.rotation.y) * player.speed < 21 )
-        && (camera.position.z + -Math.cos(camera.rotation.y) * player.speed < 5 || camera.position.x - Math.sin(camera.rotation.y) * player.speed > -5)
-        && (camera.position.x + Math.sin(camera.rotation.y) * player.speed < 4 || camera.position.z + -Math.cos(camera.rotation.y) * player.speed > -5)
-        && (camera.position.x + Math.sin(camera.rotation.y) * player.speed < 4 || camera.position.z + -Math.cos(camera.rotation.y) * player.speed < 5)){
-            return true;
+        if((camera.position.x + Math.sin(camera.rotation.y) * player.speed > 21 || camera.position.x + Math.sin(camera.rotation.y) * player.speed < -21)
+        || (camera.position.z + -Math.cos(camera.rotation.y) * player.speed > 21 || camera.position.z + -Math.cos(camera.rotation.y) * player.speed < -21)
+        || ((Math.floor(camera.position.z + -Math.cos(camera.rotation.y) * player.speed) === -7 || Math.floor(camera.position.z + -Math.cos(camera.rotation.y) * player.speed) === -5) && camera.position.x + Math.sin(camera.rotation.y) * player.speed > 4)
+        || ((Math.floor(camera.position.z + -Math.cos(camera.rotation.y) * player.speed) === -7 || Math.floor(camera.position.z + -Math.cos(camera.rotation.y) * player.speed) === -5) && camera.position.x + Math.sin(camera.rotation.y) * player.speed < -4)
+        || ((Math.floor(camera.position.z + -Math.cos(camera.rotation.y) * player.speed) === 7 || Math.floor(camera.position.z + -Math.cos(camera.rotation.y) * player.speed) === 5) && camera.position.x + Math.sin(camera.rotation.y) * player.speed > 4)
+        || ((Math.floor(camera.position.z + -Math.cos(camera.rotation.y) * player.speed) === 7 || Math.floor(camera.position.z + -Math.cos(camera.rotation.y) * player.speed) === 5) && camera.position.x + Math.sin(camera.rotation.y) * player.speed < -4)
+        || ((Math.floor(camera.position.x + Math.sin(camera.rotation.y) * player.speed) === 7 || Math.floor(camera.position.x + Math.sin(camera.rotation.y) * player.speed) === 5) && camera.position.z + -Math.cos(camera.rotation.y) * player.speed > 19)
+        || ((Math.floor(camera.position.x + Math.sin(camera.rotation.y) * player.speed) === 7 || Math.floor(camera.position.x + Math.sin(camera.rotation.y) * player.speed) === 5) && camera.position.z + -Math.cos(camera.rotation.y) * player.speed < -19)
+        || ((Math.floor(camera.position.x + Math.sin(camera.rotation.y) * player.speed) === -5 || Math.floor(camera.position.x + Math.sin(camera.rotation.y) * player.speed) === -7) && camera.position.z + -Math.cos(camera.rotation.y) * player.speed > 19)
+        || ((Math.floor(camera.position.x + Math.sin(camera.rotation.y) * player.speed) === -5 || Math.floor(camera.position.x + Math.sin(camera.rotation.y) * player.speed) === -8) && camera.position.z + -Math.cos(camera.rotation.y) * player.speed < -19)
+        || ((Math.floor(camera.position.x + Math.sin(camera.rotation.y) * player.speed) === -5 || Math.floor(camera.position.x + Math.sin(camera.rotation.y) * player.speed) === -7) && (camera.position.z + -Math.cos(camera.rotation.y) * player.speed > 6 && camera.position.z + -Math.cos(camera.rotation.y) * player.speed < 15))
+        || ((Math.floor(camera.position.x + Math.sin(camera.rotation.y) * player.speed) === -5 || Math.floor(camera.position.x + Math.sin(camera.rotation.y) * player.speed) === -8) && (camera.position.z + -Math.cos(camera.rotation.y) * player.speed < -6 && camera.position.z + -Math.cos(camera.rotation.y) * player.speed > -15))
+        || ((Math.floor(camera.position.x + Math.sin(camera.rotation.y) * player.speed) === 5 || Math.floor(camera.position.x + Math.sin(camera.rotation.y) * player.speed) === 7) && (camera.position.z + -Math.cos(camera.rotation.y) * player.speed > 6 && camera.position.z + -Math.cos(camera.rotation.y) * player.speed < 15))
+        || ((Math.floor(camera.position.x + Math.sin(camera.rotation.y) * player.speed) === 5 || Math.floor(camera.position.x + Math.sin(camera.rotation.y) * player.speed) === 7) && (camera.position.z + -Math.cos(camera.rotation.y) * player.speed < -6 && camera.position.z + -Math.cos(camera.rotation.y) * player.speed > -15))
+        ){
+            return false;
         }
+        
     }else if(num === 65){
-        if((camera.position.x + Math.sin(camera.rotation.y + Math.PI / 2) * player.speed > -4 || camera.position.z + -Math.cos(camera.rotation.y + Math.PI / 2) * player.speed > -5)
-        && (camera.position.z + -Math.cos(camera.rotation.y + Math.PI / 2) * player.speed > -21 && camera.position.z + -Math.cos(camera.rotation.y + Math.PI / 2) * player.speed < 21)
-        && (camera.position.x + Math.sin(camera.rotation.y + Math.PI / 2) * player.speed > -21 && camera.position.x + Math.sin(camera.rotation.y + Math.PI / 2) * player.speed < 21)
-        && (camera.position.z + -Math.cos(camera.rotation.y + Math.PI / 2) * player.speed < 5 || camera.position.x + Math.sin(camera.rotation.y + Math.PI / 2) * player.speed > -5)
-        && (camera.position.x + Math.sin(camera.rotation.y + Math.PI / 2) * player.speed < 4 || camera.position.z + -Math.cos(camera.rotation.y + Math.PI / 2) * player.speed > -5)
-        && (camera.position.x + Math.sin(camera.rotation.y + Math.PI / 2) * player.speed < 4 || camera.position.z + -Math.cos(camera.rotation.y + Math.PI / 2) * player.speed < 5)){
-            return true;
+        if ((camera.position.x + Math.sin(camera.rotation.y + Math.PI / 2) * player.speed > 21 || camera.position.x + Math.sin(camera.rotation.y + Math.PI / 2) * player.speed < -21)
+        || (camera.position.z + -Math.cos(camera.rotation.y + Math.PI / 2) * player.speed > 21 || camera.position.z + -Math.cos(camera.rotation.y + Math.PI / 2) * player.speed < -21)
+        || ((Math.floor(camera.position.z + -Math.cos(camera.rotation.y + Math.PI / 2) * player.speed ) === -7 || Math.floor(camera.position.z + -Math.cos(camera.rotation.y + Math.PI / 2) * player.speed ) === -5) && camera.position.x + Math.sin(camera.rotation.y + Math.PI / 2) * player.speed > 4)
+        || ((Math.floor(camera.position.z + -Math.cos(camera.rotation.y + Math.PI / 2) * player.speed ) === -7 || Math.floor(camera.position.z + -Math.cos(camera.rotation.y + Math.PI / 2) * player.speed ) === -5) && camera.position.x + Math.sin(camera.rotation.y + Math.PI / 2) * player.speed < -4)
+        || ((Math.floor(camera.position.z + -Math.cos(camera.rotation.y + Math.PI / 2) * player.speed ) === 7 || Math.floor(camera.position.z + -Math.cos(camera.rotation.y + Math.PI / 2) * player.speed ) === 5) && camera.position.x + Math.sin(camera.rotation.y + Math.PI / 2) * player.speed > 4)
+        || ((Math.floor(camera.position.z + -Math.cos(camera.rotation.y + Math.PI / 2) * player.speed ) === 7 || Math.floor(camera.position.z + -Math.cos(camera.rotation.y + Math.PI / 2) * player.speed ) === 5) && camera.position.x + Math.sin(camera.rotation.y + Math.PI / 2) * player.speed < -4)
+        || ((Math.floor(camera.position.x + Math.sin(camera.rotation.y + Math.PI / 2) * player.speed) === 7 || Math.floor(camera.position.x + Math.sin(camera.rotation.y + Math.PI / 2) * player.speed) === 5) && camera.position.z + -Math.cos(camera.rotation.y + Math.PI / 2) * player.speed > 19)
+        || ((Math.floor(camera.position.x + Math.sin(camera.rotation.y + Math.PI / 2) * player.speed) === 7 || Math.floor(camera.position.x + Math.sin(camera.rotation.y + Math.PI / 2) * player.speed) === 5) && camera.position.z + -Math.cos(camera.rotation.y + Math.PI / 2) * player.speed < -19)
+        || ((Math.floor(camera.position.x + Math.sin(camera.rotation.y + Math.PI / 2) * player.speed) === -5 || Math.floor(camera.position.x + Math.sin(camera.rotation.y + Math.PI / 2) * player.speed) === -7) && camera.position.z + -Math.cos(camera.rotation.y + Math.PI / 2) * player.speed > 19)
+        || ((Math.floor(camera.position.x + Math.sin(camera.rotation.y + Math.PI / 2) * player.speed) === -5 || Math.floor(camera.position.x + Math.sin(camera.rotation.y + Math.PI / 2) * player.speed) === -8) && camera.position.z + -Math.cos(camera.rotation.y + Math.PI / 2) * player.speed < -19)
+        || ((Math.floor(camera.position.x + Math.sin(camera.rotation.y + Math.PI / 2) * player.speed) === -5 || Math.floor(camera.position.x + Math.sin(camera.rotation.y + Math.PI / 2) * player.speed) === -7) && (camera.position.z + -Math.cos(camera.rotation.y + Math.PI / 2) * player.speed > 6 && camera.position.z + -Math.cos(camera.rotation.y + Math.PI / 2) * player.speed < 15))
+        || ((Math.floor(camera.position.x + Math.sin(camera.rotation.y + Math.PI / 2) * player.speed) === -5 || Math.floor(camera.position.x + Math.sin(camera.rotation.y + Math.PI / 2) * player.speed) === -8) && (camera.position.z + -Math.cos(camera.rotation.y + Math.PI / 2) * player.speed < -6 && camera.position.z + -Math.cos(camera.rotation.y + Math.PI / 2) * player.speed > -15))
+        || ((Math.floor(camera.position.x + Math.sin(camera.rotation.y + Math.PI / 2) * player.speed) === 5 || Math.floor(camera.position.x + Math.sin(camera.rotation.y + Math.PI / 2) * player.speed) === 7) && (camera.position.z + -Math.cos(camera.rotation.y + Math.PI / 2) * player.speed > 6 && camera.position.z + -Math.cos(camera.rotation.y + Math.PI / 2) * player.speed < 15))
+        || ((Math.floor(camera.position.x + Math.sin(camera.rotation.y + Math.PI / 2) * player.speed) === 5 || Math.floor(camera.position.x + Math.sin(camera.rotation.y + Math.PI / 2) * player.speed) === 7) && (camera.position.z + -Math.cos(camera.rotation.y + Math.PI / 2) * player.speed < -6 && camera.position.z + -Math.cos(camera.rotation.y + Math.PI / 2) * player.speed > -15))
+        ){
+            return false;
         }
+       
     }else if(num === 68){
-        if((camera.position.x + Math.sin(camera.rotation.y - Math.PI / 2) * player.speed > -4 || camera.position.z + -Math.cos(camera.rotation.y - Math.PI / 2) * player.speed > -5)
-        && (camera.position.z + -Math.cos(camera.rotation.y - Math.PI / 2) * player.speed > -21 && camera.position.z + -Math.cos(camera.rotation.y - Math.PI / 2) * player.speed < 21)
-        && (camera.position.x + Math.sin(camera.rotation.y - Math.PI / 2) * player.speed > -21 && camera.position.x + Math.sin(camera.rotation.y - Math.PI / 2) * player.speed < 21 )
-        && (camera.position.z + -Math.cos(camera.rotation.y - Math.PI / 2) * player.speed < 5 || camera.position.x + Math.sin(camera.rotation.y - Math.PI / 2) * player.speed > -5)
-        && (camera.position.x + Math.sin(camera.rotation.y - Math.PI / 2) * player.speed < 4 || camera.position.z + -Math.cos(camera.rotation.y - Math.PI / 2) * player.speed > -5)
-        && (camera.position.x + Math.sin(camera.rotation.y - Math.PI / 2) * player.speed < 4 || camera.position.z + -Math.cos(camera.rotation.y - Math.PI / 2) * player.speed < 5 )){
-            return true;
+        if ((camera.position.x + Math.sin(camera.rotation.y - Math.PI / 2) * player.speed > 21 || camera.position.x + Math.sin(camera.rotation.y - Math.PI / 2) * player.speed < -21)
+        || (camera.position.z + -Math.cos(camera.rotation.y - Math.PI / 2) * player.speed > 21 || camera.position.z + -Math.cos(camera.rotation.y - Math.PI / 2) * player.speed < -21)
+        || ((Math.floor(camera.position.z + -Math.cos(camera.rotation.y - Math.PI / 2) * player.speed) === -7 || Math.floor(camera.position.z + -Math.cos(camera.rotation.y - Math.PI / 2) * player.speed) === -5)&& camera.position.x + Math.sin(camera.rotation.y - Math.PI / 2) * player.speed > 4)
+        || ((Math.floor(camera.position.z + -Math.cos(camera.rotation.y - Math.PI / 2) * player.speed) === -7 || Math.floor(camera.position.z + -Math.cos(camera.rotation.y - Math.PI / 2) * player.speed) === -5)&& camera.position.x + Math.sin(camera.rotation.y - Math.PI / 2) * player.speed < -4)
+        || ((Math.floor(camera.position.z + -Math.cos(camera.rotation.y - Math.PI / 2) * player.speed) === 7 || Math.floor(camera.position.z + -Math.cos(camera.rotation.y - Math.PI / 2) * player.speed) === 5) && camera.position.x + Math.sin(camera.rotation.y - Math.PI / 2) * player.speed > 4)
+        || ((Math.floor(camera.position.z + -Math.cos(camera.rotation.y - Math.PI / 2) * player.speed) === 7 || Math.floor(camera.position.z + -Math.cos(camera.rotation.y - Math.PI / 2) * player.speed) === 5) && camera.position.x + Math.sin(camera.rotation.y - Math.PI / 2) * player.speed < -4)
+        || ((Math.floor(camera.position.x + Math.sin(camera.rotation.y - Math.PI / 2) * player.speed) === 7 || Math.floor(camera.position.x + Math.sin(camera.rotation.y - Math.PI / 2) * player.speed) === 5) && camera.position.z + -Math.cos(camera.rotation.y - Math.PI / 2) * player.speed > 19)
+        || ((Math.floor(camera.position.x + Math.sin(camera.rotation.y - Math.PI / 2) * player.speed) === 7 || Math.floor(camera.position.x + Math.sin(camera.rotation.y - Math.PI / 2) * player.speed) === 5) && camera.position.z + -Math.cos(camera.rotation.y - Math.PI / 2) * player.speed < -19)
+        || ((Math.floor(camera.position.x + Math.sin(camera.rotation.y - Math.PI / 2) * player.speed) === -5 || Math.floor(camera.position.x + Math.sin(camera.rotation.y - Math.PI / 2) * player.speed) === -7) && camera.position.z + -Math.cos(camera.rotation.y - Math.PI / 2) * player.speed > 19)
+        || ((Math.floor(camera.position.x + Math.sin(camera.rotation.y - Math.PI / 2) * player.speed) === -5 || Math.floor(camera.position.x + Math.sin(camera.rotation.y - Math.PI / 2) * player.speed) === -8) && camera.position.z + -Math.cos(camera.rotation.y - Math.PI / 2) * player.speed < -19)
+        || ((Math.floor(camera.position.x + Math.sin(camera.rotation.y - Math.PI / 2) * player.speed) === -5 || Math.floor(camera.position.x + Math.sin(camera.rotation.y - Math.PI / 2) * player.speed) === -7) && (camera.position.z + -Math.cos(camera.rotation.y - Math.PI / 2) * player.speed > 6 && camera.position.z + -Math.cos(camera.rotation.y - Math.PI / 2) * player.speed < 15))
+        || ((Math.floor(camera.position.x + Math.sin(camera.rotation.y - Math.PI / 2) * player.speed) === -5 || Math.floor(camera.position.x + Math.sin(camera.rotation.y - Math.PI / 2) * player.speed) === -8) && (camera.position.z + -Math.cos(camera.rotation.y - Math.PI / 2) * player.speed < -6 && camera.position.z + -Math.cos(camera.rotation.y - Math.PI / 2) * player.speed > -15))
+        || ((Math.floor(camera.position.x + Math.sin(camera.rotation.y - Math.PI / 2) * player.speed) === 5 || Math.floor(camera.position.x + Math.sin(camera.rotation.y - Math.PI / 2) * player.speed) === 7) && (camera.position.z + -Math.cos(camera.rotation.y - Math.PI / 2) * player.speed > 6 && camera.position.z + -Math.cos(camera.rotation.y - Math.PI / 2) * player.speed < 15))
+        || ((Math.floor(camera.position.x + Math.sin(camera.rotation.y - Math.PI / 2) * player.speed) === 5 || Math.floor(camera.position.x + Math.sin(camera.rotation.y - Math.PI / 2) * player.speed) === 7) && (camera.position.z + -Math.cos(camera.rotation.y - Math.PI / 2) * player.speed < -6 && camera.position.z + -Math.cos(camera.rotation.y - Math.PI / 2) * player.speed > -15))
+        ){
+            return false;
         }
+       
     }
+
+    return true;
     
 }
 
