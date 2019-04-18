@@ -4,18 +4,70 @@
             Apocalypse
         </title>
         <style>
-            body { margin: 0;}
+            body { margin: 0;width: 100%; height: 100% }
             canvas { width: 100%; height: 100% };
         </style>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/103/three.js"></script>
-        <link rel="stylesheet" href="CSS/index.css">
+        <link rel="stylesheet" href="CSS/index.scss">
+        <link href="https://fonts.googleapis.com/css?family=Source+Code+Pro:200,300,400,500,600,700,800,900" rel="stylesheet">
+        <script type=“application/javascript” src=“/src/index.js”></script>
+        <script src="https://www.gstatic.com/firebasejs/5.9.4/firebase.js"></script>
     </head>
     
     <body>
         <script src="js/three.js"></script>
         <script src="js/physi.js"></script>
         <script src="bundle.js"></script>
-        <h1 class='Header'>hello</h1>
+        <img src="/images/cross_hair.png" class="cross-hair" />
+        <h1 id='kills'></h1>
+        <h1 ></h1>
+        <div id="start-modal">
+            <div class="score-board">
+                    <div class="score-board-border">
+                        <h1>Highest Score</h1>
+                        <h3 id="leader"></h3>
+                    </div>
+                    <a href="https://github.com/wfragoso02"><i class="fab fa-github fa-3x"></i></a>
+                    <i class="fab fa-github"></i>
+            </div>
+            <div class="modal">
+
+                    <h1 class="title">Apocalypse</h1>
+                    <h1 class="text">How long can you survive?</h1>
+                    <button class="start"onclick="play()"> <h1 class="start-text">Click to play</h1></button>
+            </div>
+            <div class="controls">
+                    <div class="controls-text">
+                        <h1>Controls</h1>
+                        <h4>W | Up</h4>
+                        <h4>S | Down</h4>
+                        <h4>A | Left</h4>
+                        <h4>D | Right</h4>
+                        <h4>Space | Shoot</h4>
+                        <h4>Left | Camera Left</h4>
+                        <h4>Right | Camera Right</h4>
+                        <a href="http://linkedin.com/in/wellington-fragoso"><i class="fab fa-linkedin fa-3x"></i></a>
+
+                    </div>
+            </div>
+            
+        </div>
+        <div id="game-over-modal">
+            <div class="form">
+
+                <form class="submit-form" onsubmit="handleSubmit(name)">
+                    <label for="name">Name:
+                        <input type="text" name="name" id="name" value="">
+                    </label>
+                    <input class="submit-button" type="submit" value="Submit">
+                </form>
+                <div class="buttons">
+    
+                    <button onclick="play()">Restart</button>
+                    <button onclick="cancel()">Cancel</button>
+                </div>
+            </div>
+        </div>
 
         </body>
         </html>

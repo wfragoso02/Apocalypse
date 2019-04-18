@@ -1,0 +1,175 @@
+html{
+    margin:0;
+    top:0;
+    font-family: 'Source Code Pro', sans-serif;
+    color: white;
+    min-height: 100%;
+    min-width: 100%;
+}
+#kills{
+    left: 3vw;
+    position: fixed;
+    color: white;
+    top: 90vh;
+    width: 100vh;
+    height: 100vh;
+    background: transparent;
+    margin: 0;
+    color: rgba(170, 6, 6, 0.884);
+}
+#start-modal{
+    top: 0;
+    height: 100%;
+    width: 100%;
+    left: 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: fixed;
+    background: rgba(0, 0, 0, 0.973);
+    color: white;
+    border: 2px solid black;
+    background-image: url('/images/blood-splatter-png-image-0.png') ;
+    /* transform: 5s ease-in-out; */
+
+}
+.modal{
+    display: flex;
+    flex-direction: column;
+    /* justify-content: center; */
+    align-items: center;
+    text-shadow: 1px 1px #000000;
+
+}
+.title{
+    top: 3vh;
+    font-size: 10vw;
+    color: rgb(170, 6, 6);
+    text-shadow: 2px 2px #252525;
+
+}
+.text{
+    font-size: 2vw;
+    font-weight: 900;
+    
+}
+.start{
+    position: absolute;
+    bottom: 2vh;
+    border: 1px solid transparent;
+    background: transparent;
+    
+}
+.start-text{
+    color: rgb(66, 65, 65);
+    font-size: 5vw;
+    font-weight: 400;
+    text-shadow: 1px 1px 1px;
+    top: 15vw;
+    
+}
+.start-text:hover{
+    cursor: pointer;
+}
+a{
+    color: red;
+}
+.score-board{
+    right: -1vw;
+    display: flex;
+    flex-direction: column;
+    text-shadow: 1px 1px #000000;
+    position: relative;
+}
+.controls{
+    left: -1vw;
+    display: flex;
+    position: relative;
+    text-shadow: 1px 1px #000000;
+}
+
+.score-board-border{
+    background:  rgba(0, 0, 0, 0.61);
+    border: 1px solid rgba(36, 36, 36, 0.753);
+    border-radius: 5px;
+    padding: 1vw;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    
+}
+.controls-text{
+    background:  rgba(0, 0, 0, 0.61);
+    border: 1px solid rgba(34, 34, 34, 0.753);
+    border-radius: 5px;
+    padding: 1vw;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.start-text{
+    animation:blinkingText 1.3s infinite;
+}
+@keyframes blinkingText{
+    0%{     color: rgb(70, 70, 70);    }
+    50%{    color: transparent; }
+    100%{   color: rgb(48, 48, 48);    }
+}
+
+#game-over-modal{
+    flex-direction: column;
+    display: none;
+    position: absolute;
+    justify-content: center;
+    align-items: center;
+    top: 0;
+    width: 100vw;
+    height: 100vh;
+}
+.form{
+    border: 1px solid black;
+    background: rgba(0, 0, 0, 0.904);
+    height: 8vh;
+    width: 21vw;
+    padding: 14px;
+    border-radius: 5px;
+}
+.submit-button{
+    font-size: 1.5vh;
+    background: transparent;
+    color: rgb(218, 9, 9);
+    border: 1px solid transparent;
+    cursor: pointer;
+}
+.submit-form{
+    display: flex;
+    justify-content: center;
+}
+.buttons{
+    display: flex;
+    justify-content: center;
+}
+.buttons button{
+    background: rgb(68, 68, 68);
+    height: 2.5vh;
+    width: 5vw;
+    margin: 0.5vw;
+   font-size: 1.5vh;
+   border-radius: 2px;
+   padding: 1px;
+}
+.buttons button:hover{
+    cursor: pointer;
+    color: white;
+}
+.cross-hair{
+    position: fixed;
+    display: flex;
+    justify-content: center;
+    top: 50vh;
+    align-items: center;
+    height: 4vh;
+    width: 4vh;
+    left: 49.5vw;
+}
