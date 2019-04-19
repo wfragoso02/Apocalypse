@@ -109,11 +109,13 @@ a{
 }
 
 .start-text{
-    animation:blinkingText 1.3s infinite;
+    animation:blinkingText 1s infinite;
 }
 @keyframes blinkingText{
     0%{     color: rgb(70, 70, 70);    }
+    40% { color: rgb(70, 70, 70)}
     50%{    color: transparent; }
+    60% { color: rgb(48, 48, 48)}
     100%{   color: rgb(48, 48, 48);    }
 }
 
