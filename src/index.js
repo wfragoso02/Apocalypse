@@ -113,6 +113,8 @@ function max(objects){
 let handler;
 window.play = play;
 function play(){
+    camera.position.set (0, player.height, -5);
+    camera.lookAt(new THREE.Vector3(0, player.height, 0));
     gameOver = false;
     kills = 0;
     document.getElementById("start-modal").style.display="none";
