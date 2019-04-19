@@ -22,7 +22,7 @@ renderer.setSize(window.innerWidth, window.innerHeight);
 document.body.appendChild(renderer.domElement);
 const loader = new GLTFLoader();
 
-loader.load( '/blender-files/stage.glb', function (gltf) {
+loader.load( './blender-files/stage.glb', function (gltf) {
     const stage = gltf.scene; 
     stage.scale.x = stage.scale.y = stage.scale.z = 3;
     scene.add(stage);
@@ -45,7 +45,7 @@ const spawnEnemy = () => {
     const coordinates = [{x:20, y: 0, z:0 }, {x:0, y: 0, z:-20},{x:-20, y: 0, z:0 },{x:0, y: 0, z:20 } ];
     const coordinate = coordinates[Math.floor(Math.random() * coordinates.length)];
     const speed = speeds[Math.floor(Math.random() * speeds.length)];
-    loader.load( '/blender-files/real-zombie.glb', function (gltf) {
+    loader.load( './blender-files/real-zombie.glb', function (gltf) {
             const enemy = gltf.scene;
             enemy.scale.x = enemy.scale.y = enemy.scale.z = 0.8;
             enemy.position.setX(coordinate.x)
@@ -60,7 +60,7 @@ const spawnEnemy = () => {
 }
 
 let gun;
-loader.load( '/blender-files/Handgun_Game_Blender Gamer Engine.glb', function ( gltf ) {
+loader.load( './blender-files/Handgun_Game_Blender Gamer Engine.glb', function ( gltf ) {
     gun = gltf.scene; 
     gun.rotation.set(new THREE.Vector3( 0, 0, Math.PI / 2));
     gun.scale.x = gun.scale.y = gun.scale.z = 0.5;
