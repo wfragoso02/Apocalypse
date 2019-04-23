@@ -7,7 +7,7 @@ Apocalypse is a 3D first person shooter game with a survival mode objective.  Th
 Try it [Live](https://wfragoso02.github.io/JS-Project/) game here.
   
     
-![alt text] -- play
+![alt text](https://github.com/wfragoso02/Apocalypse/blob/master/images/Screen%20Shot%202019-04-22%20at%2011.36.27%20PM.png)
 
 ### Game And Controls
 Zombies will chase you infinitely around the apartment until they reach you or until you shoot them.  
