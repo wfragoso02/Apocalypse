@@ -4,14 +4,14 @@
 ### Background and Overview
 Apocalypse is a 3D first person shooter game with a survival mode objective.  The character is trapped in an apartment while being chased by zombie ghosts.  The main and only objective is to kill as many zombies as possible to survive. 
   
-Try it [Live](https://wfragoso02.github.io/JS-Project/) game here.
+Try the [Live](https://wfragoso02.github.io/JS-Project/) game here.
   
     
 ![alt text](https://github.com/wfragoso02/Apocalypse/blob/master/images/Screen%20Shot%202019-04-22%20at%2011.36.27%20PM.png)
 
 ### Game And Controls
 Zombies will chase you infinitely around the apartment until they reach you or until you shoot them.  
-Use the following keys to move and shoot:
+Use the keys above to move and shoot.
 
 # Technologies
 ### Apocalypse's Architecture and Technologies: 
@@ -22,7 +22,7 @@ Use the following keys to move and shoot:
 
 # Awesome Features
 ### Firebase
-Apacalypse utilizes firebase to host highscores but the game only renders the highest score and the player's name.
+Apacalypse utilizes firebase to host highscores but the game only renders the highest score and the corresponding player.
   
 ```javascript
 firebase.initializeApp(config);
@@ -81,6 +81,7 @@ const spawnEnemy = () => {
 
 }
 ```
-
+# Credit
+The stage model and zombies came were provided by [free3d](https://free3d.com/).
 
 
