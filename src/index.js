@@ -140,7 +140,6 @@ window.handleSubmit = handleSubmit;
 function handleSubmit(name){
     
     const nameSubmitted = name.value;
-    debugger
     ref.push({name: nameSubmitted, kills: kills});
     document.getElementById("start-modal").style.display="flex";
     kills = 0;
