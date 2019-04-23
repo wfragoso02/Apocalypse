@@ -1,31 +1,86 @@
 # Apocalypse 
-[Live](https://wfragoso02.github.io/JS-Project/)
+
+
 ### Background and Overview
-* Apocalypse is a 3D first person shooting game with a survival mode objective.  The character is trapped in the hallway of an apartment building while being chased by zombies.  The main and only objective is to kill as many zombies as possible to survive.
-### Functionality and MVP Features
-*  MVP 1 - Create a 3D replica of an apartment hallway to be the layout of the game (blender).
-*  MVP 2 - Get the camera to be a first person view.
-*  MVP 3 - Place a gun in front of the screen and have the gun shooting.
-*  MVP 4 - Spawn enemies randomly in the hallway and get the to follow the player.
-*  MVP 5 - Game Over once the zombies have successfully reached the player.
-*  MVP 6 - Apply collision for the zombies and the player against the layout.
-*  MVP 7 - Apply animation for the zombies when walking, running, and dying.
-*  MVP 8 - Provide a front page that starts the game.
-*  MVP 9 - Place a High Score counter for the amount of zombies that were killed.
-*  MVP 10 - Place a sound track for background music and different audio for zombies and player breath.
-*  MVP 11 - Place a mute button for all sounds.
-### Architecture and Technologies
-*  Three.js - 3D library.
-*  Blender - contruction of the objects and animations.
-### Implementation Timeline
-* MVP 1 - complete by April 11th
-* MVP 2 - complete by April 11th
-* MVP 3 - complete by April 11th
-* MVP 4 - complete by April 12th
-* MVP 5 - complete by April 12th
-* MVP 6 - complete by April 12th
-* MVP 7 - complete by April 13th
-* MVP 8 - complete by April 13th
-* MVP 9 - complete by April 14th
-* MVP 10 - complete by April 14th
-* MVP 11 - complete by April 14th
+Apocalypse is a 3D first person shooter game with a survival mode objective.  The character is trapped in an apartment while being chased by zombie ghosts.  The main and only objective is to kill as many zombies as possible to survive. 
+  
+Try it [Live](https://wfragoso02.github.io/JS-Project/) game here.
+  
+    
+![alt text] -- play
+
+### Game And Controls
+Zombies will chase you infinitely around the apartment until they reach you or until you shoot them.  
+Use the following keys to move and shoot:
+
+# Technologies
+### Apocalypse's Architecture and Technologies: 
+* Fully written in native Javascript.
+* Three.js - 3D library.
+* Blender - Contruction of the objects and animations.
+* Firebase - Host highscores.
+
+# Awesome Features
+### Firebase
+Apacalypse utilizes firebase to host highscores but the game only renders the highest score and the player's name.
+  
+```javascript
+firebase.initializeApp(config);
+const database = firebase.database();
+const ref = database.ref('scores');
+ref.on('value', getData, errData);
+function errData(err) {
+    console.log('Error!');
+    console.log(err);
+}
+
+function getData(data){
+    const scores = data.val();
+    const object = max(scores);
+    const name = object.name.toUpperCase();
+    const score = object.kills;
+    if (document.getElementById('leader')){
+        let leaderBoard = document.getElementById('leader');
+        leaderBoard.innerText = `${name} | ${score}`;
+    }
+}
+
+function max(objects){
+    const arr = Object.values(objects);
+    let max;
+    arr.forEach(obj => {
+        if(max === undefined || obj.kills > max.kills){
+            max = obj;
+        }
+    })
+    return max;
+}
+```
+
+
+### Zombie Spawning
+Apocalypse randomises the location and speed of the spawning zombies.
+```javascript
+let enemies = [];
+const spawnEnemy = () => {
+    const speeds = [0.1, 0.2, 0.05, 0.01];
+    const coordinates = [{x:20, y: 0, z:0 }, {x:0, y: 0, z:-20},{x:-20, y: 0, z:0 },{x:0, y: 0, z:20 } ];
+    const coordinate = coordinates[Math.floor(Math.random() * coordinates.length)];
+    const speed = speeds[Math.floor(Math.random() * speeds.length)];
+    loader.load( 'images/real-zombie.glb', function (gltf) {
+            const enemy = gltf.scene;
+            enemy.scale.x = enemy.scale.y = enemy.scale.z = 0.8;
+            enemy.position.setX(coordinate.x)
+            enemy.position.setY(coordinate.y)
+            enemy.position.setZ(coordinate.z)
+            enemy.speed = speed
+            enemies.push(enemy);
+            scene.add( enemy );
+            }
+    );
+
+}
+```
+
+
+
