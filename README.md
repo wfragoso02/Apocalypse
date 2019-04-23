@@ -82,6 +82,6 @@ const spawnEnemy = () => {
 }
 ```
 # Credit
-The stage model and zombies came were provided by [free3d](https://free3d.com/).
+The stage model and zombie sprite were provided by [free3d](https://free3d.com/).
 
 
