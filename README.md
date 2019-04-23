@@ -1,4 +1,5 @@
 # Apocalypse 
+[Live](https://wfragoso02.github.io/JS-Project/)
 ### Background and Overview
 * Apocalypse is a 3D first person shooting game with a survival mode objective.  The character is trapped in the hallway of an apartment building while being chased by zombies.  The main and only objective is to kill as many zombies as possible to survive.
 ### Functionality and MVP Features
