@@ -173,11 +173,12 @@ const update = function() {
                 }
             })
 
-            bullets.forEach(bullet => {
-                if((Math.floor(enemy.position['x']) === (Math.floor(bullet.position['x'])) || (Math.floor(enemy.position['x'] === Math.floor(bullet.position['x'] + 1))) || (Math.floor(enemy.position['x'] === Math.floor(bullet.position['x'] - 1)))) && 
-                (Math.floor(enemy.position['z']) === Math.floor(bullet.position['z']) || (Math.floor(enemy.position['z']) === Math.floor(enemy.position['z'] + 1)) || (Math.floor(enemy.position['z'] - 1)))){
+            bullets.forEach((bullet, idx2) => {
+                    if((Math.abs(bullet.position['x'] - enemy.position['x']) < 1) &&
+                    (Math.abs(bullet.position['z'] - enemy.position['z']) < 1)){
                     bullet.alive = false;
-                    scene.remove(bullet)
+                    scene.remove(bullet);
+                    bullets.splice(idx2, 1);
                     scene.remove(enemy);
                     enemies.splice(idx, 1);
                     kills += 1;
@@ -190,9 +191,23 @@ const update = function() {
                 camera.rotation.z
             )
     })
-    bullets.forEach(bullet => {
-        if (bullet.position['x'] > 21 || bullet.position['x'] < -21 || bullet.position['z'] > 21 || bullet.position['z'] < -21){
-            scene.remove(bullet)
+    bullets.forEach((bullet, idx) => {
+        if ((bullet.position['x'] > 21 || bullet.position['x'] < -21 || bullet.position['z'] > 21 || bullet.position['z'] < -21)
+        || (bullet.position['x'] > 5 && Math.floor(bullet.position['z'] === -6))
+        || (bullet.position['x'] < -5 && Math.floor(bullet.position['z'] === -6))
+        || (bullet.position['x'] > 5 && Math.floor(bullet.position['z'] === 6))
+        || (bullet.position['x'] < -5 && Math.floor(bullet.position['z'] === 6))
+        || (bullet.position['z'] > 19 && Math.floor(bullet.position['x'] === 6))
+        || (bullet.position['z'] < -19 && Math.floor(bullet.position['x'] === 6))
+        || (bullet.position['z'] > 19 && Math.floor(bullet.position['x'] === -6))
+        || (bullet.position['z'] < -19 && Math.floor(bullet.position['x'] === -6))
+        || ((bullet.position['z'] > 6 || bullet.position['z'] < 15) && Math.floor(bullet.position['x'] === -6))
+        || ((bullet.position['z'] > -15 || bullet.position['z'] < -6) && Math.floor(bullet.position['x'] === -6))
+        || ((bullet.position['z'] > 6 || bullet.position['z'] < 15) && Math.floor(bullet.position['x'] === 6))
+        || ((bullet.position['z'] > -15 || bullet.position['z'] < -6) && Math.floor(bullet.position['x'] === 6))
+        ){
+            scene.remove(bullet);
+            bullets.splice(idx,1);
         }
     })
 }
@@ -335,7 +350,6 @@ function render() {
         if(bullet.alive === false){
             bullets.splice(idx, 1);
         }else{
-
             bullet.position.add(bullet.velocity)
         }
     })
