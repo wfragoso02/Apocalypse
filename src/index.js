@@ -94,10 +94,8 @@ function getData(data){
     const object = max(scores);
     const name = object.name.toUpperCase();
     const score = object.kills;
-    if (document.getElementById('leader')){
-        let leaderBoard = document.getElementById('leader');
-        leaderBoard.innerText = `${name} | ${score}`;
-    }
+    let leaderBoard = document.getElementById('leader');
+    leaderBoard.innerText = `${name} | ${score}`;
 }
 
 function max(objects){
