@@ -7,6 +7,7 @@
     "@babel/preset-react": "^7.0.0",
     "babel-loader": "^8.0.5",
     "express": "^4.16.4",
+    "firebase": "^5.10.1",
     "first-person-controls": "^1.0.1",
     "three-firstperson-vr-controls": "^0.2.0",
     "webpack": "^4.29.6",

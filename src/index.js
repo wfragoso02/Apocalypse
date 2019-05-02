@@ -1,6 +1,7 @@
 import * as THREE from '../js/three';
 import GLTFLoader from '../js/GLTFLoader';
-import Enemy from './enemies';
+import firebase from 'firebase/app';
+import 'firebase/database';
 
 let gameOver = false;
 let player = {height: 5, speed: 0.2, turnSpeed: Math.PI * 0.02, canShoot:0 };
